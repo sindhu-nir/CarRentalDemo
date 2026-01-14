@@ -10,15 +10,19 @@ using System.Windows.Forms;
 
 namespace CarRentalApp
 {
-    public partial class formCarRental : Form
+    public partial class MainWIndow : Form
     {
-        public formCarRental()
+        public MainWIndow()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void addRentalRecordToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var addRentalRecord = new AddRentalRecord();
+            addRentalRecord.MdiParent = this;
+            addRentalRecord.Show();
+
         }
     }
 }

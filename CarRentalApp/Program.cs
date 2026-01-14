@@ -16,7 +16,7 @@ namespace CarRentalApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new formCarRental());
+            Application.Run(new MainWIndow());
         }
     }
 }
