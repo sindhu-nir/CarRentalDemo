@@ -14,3 +14,5 @@ C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\bin\Debug\EntityFramework.SqlSe
 C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\obj\Debug\CarRenta.B8E0B7D3.Up2Date
 C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\obj\Debug\CarRentalApp.MainWIndow.resources
 C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\obj\Debug\CarRentalApp.addRentalRecord.resources
+C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\obj\Debug\CarRentalApp.ManageVehicleListing.resources
+C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\obj\Debug\CarRentalApp.AddEditVehicle.resources

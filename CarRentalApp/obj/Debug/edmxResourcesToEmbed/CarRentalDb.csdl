@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="CarRentalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="CarRentalEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CarRentalRecords" EntityType="CarRentalModel.CarRentalRecord" />
+    <EntitySet Name="TypesOfCars" EntityType="CarRentalModel.TypesOfCar" />
+    <AssociationSet Name="FK_CarRentalRecord_TypesOfCars" Association="CarRentalModel.FK_CarRentalRecord_TypesOfCars">
+      <End Role="TypesOfCar" EntitySet="TypesOfCars" />
+      <End Role="CarRentalRecord" EntitySet="CarRentalRecords" />
+    </AssociationSet>
+  </EntityContainer>
   <EntityType Name="CarRentalRecord">
     <Key>
       <PropertyRef Name="id" />
@@ -10,34 +18,30 @@
     <Property Name="DateReturned" Type="DateTime" Precision="3" />
     <Property Name="Cost" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="TypeOfCarId" Type="Int32" />
-    <NavigationProperty Name="TypesOfCar" Relationship="Self.FK_CarRentalRecord_TypesOfCars" FromRole="CarRentalRecord" ToRole="TypesOfCars" />
+    <NavigationProperty Name="TypesOfCar" Relationship="CarRentalModel.FK_CarRentalRecord_TypesOfCars" FromRole="CarRentalRecord" ToRole="TypesOfCar" />
   </EntityType>
   <EntityType Name="TypesOfCar">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="CarRentalRecords" Relationship="Self.FK_CarRentalRecord_TypesOfCars" FromRole="TypesOfCars" ToRole="CarRentalRecord" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Make" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="VIN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LicensePlateNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Year" Type="Int32" />
+    <NavigationProperty Name="CarRentalRecords" Relationship="CarRentalModel.FK_CarRentalRecord_TypesOfCars" FromRole="TypesOfCar" ToRole="CarRentalRecord" />
   </EntityType>
   <Association Name="FK_CarRentalRecord_TypesOfCars">
-    <End Role="TypesOfCars" Type="Self.TypesOfCar" Multiplicity="0..1" />
-    <End Role="CarRentalRecord" Type="Self.CarRentalRecord" Multiplicity="*" />
+    <End Type="CarRentalModel.TypesOfCar" Role="TypesOfCar" Multiplicity="0..1" />
+    <End Type="CarRentalModel.CarRentalRecord" Role="CarRentalRecord" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="TypesOfCars">
-        <PropertyRef Name="id" />
+      <Principal Role="TypesOfCar">
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="CarRentalRecord">
         <PropertyRef Name="TypeOfCarId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="CarRentalEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="CarRentalRecords" EntityType="Self.CarRentalRecord" />
-    <EntitySet Name="TypesOfCars" EntityType="Self.TypesOfCar" />
-    <AssociationSet Name="FK_CarRentalRecord_TypesOfCars" Association="Self.FK_CarRentalRecord_TypesOfCars">
-      <End Role="TypesOfCars" EntitySet="TypesOfCars" />
-      <End Role="CarRentalRecord" EntitySet="CarRentalRecords" />
-    </AssociationSet>
-  </EntityContainer>
 </Schema>

@@ -13,17 +13,21 @@
   </EntityType>
   <EntityType Name="TypesOfCars">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Make" Type="nvarchar" MaxLength="50" />
+    <Property Name="Model" Type="nvarchar" MaxLength="50" />
+    <Property Name="VIN" Type="nvarchar" MaxLength="50" />
+    <Property Name="LicensePlateNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="Year" Type="int" />
   </EntityType>
   <Association Name="FK_CarRentalRecord_TypesOfCars">
     <End Role="TypesOfCars" Type="Self.TypesOfCars" Multiplicity="0..1" />
     <End Role="CarRentalRecord" Type="Self.CarRentalRecord" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="TypesOfCars">
-        <PropertyRef Name="id" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="CarRentalRecord">
         <PropertyRef Name="TypeOfCarId" />

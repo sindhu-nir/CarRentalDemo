@@ -190,7 +190,7 @@
             this.Controls.Add(this.label1);
             this.Name = "AddRentalRecord";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Car Rental Form";
+            this.Text = "Add Rental Record";
             this.Load += new System.EventHandler(this.formCarRental_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
