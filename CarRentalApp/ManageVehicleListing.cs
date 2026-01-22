@@ -21,23 +21,30 @@ namespace CarRentalApp
 
         }
 
-        private void ManageVehicleListing_Load(object sender, EventArgs e)
+        public void PopulateGrid()
         {
+            // Select a custom model collection of cars from database
             var cars = _db.TypesOfCars
-                .Select(q => new {
-                    q.Make,
-                    q.Model, 
-                    q.VIN, 
-                    q.Year, 
-                    q.LicensePlateNumber,
-                    q.Id,
+                .Select(q => new
+                {
+                    Make = q.Make,
+                    Model = q.Model,
+                    VIN = q.VIN,
+                    Year = q.Year,
+                    LicensePlateNumber = q.LicensePlateNumber,
+                    q.Id
                 })
                 .ToList();
             gvVehicleList.DataSource = cars;
-            //gvVehicleList.Columns[0].HeaderText = "ID";
             gvVehicleList.Columns[4].HeaderText = "License Plate Number";
-            gvVehicleList.Columns[5].Visible = false;
+            //Hide the column for ID. Changed from the hard coded column value to the name, 
+            // to make it more dynamic. 
+            gvVehicleList.Columns["Id"].Visible = false;
+        }
 
+        private void ManageVehicleListing_Load(object sender, EventArgs e)
+        {
+            PopulateGrid();
         }
 
         private void btAddNewCar_Click(object sender, EventArgs e)
@@ -49,11 +56,25 @@ namespace CarRentalApp
 
         private void btEditCar_Click(object sender, EventArgs e)
         {
-            var Id = (int)gvVehicleList.SelectedRows[0].Cells["Id"].Value;
-            var car = _db.TypesOfCars.FirstOrDefault(q => q.Id == Id);
-            AddEditVehicle addEditVehicle = new AddEditVehicle(car);
-            addEditVehicle.MdiParent = this.MdiParent;
-            addEditVehicle.Show();
+            try
+            {
+                if (gvVehicleList.SelectedRows.Count > 0) // Check if any row is selected
+                {
+                    var Id = (int)gvVehicleList.SelectedRows[0].Cells["Id"].Value;
+                    var car = _db.TypesOfCars.FirstOrDefault(q => q.Id == Id);
+                    AddEditVehicle addEditVehicle = new AddEditVehicle(car);
+                    addEditVehicle.MdiParent = this.MdiParent;
+                    addEditVehicle.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Please select a vehicle first.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
         }
 
         private void btDeleteCar_Click(object sender, EventArgs e)
@@ -63,6 +84,21 @@ namespace CarRentalApp
             _db.TypesOfCars.Remove(car);     
             _db.SaveChanges();
             gvVehicleList.Refresh();
+
+        }
+
+        private void btRefresh_Click(object sender, EventArgs e)
+        {
+            PopulateGrid();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gvVehicleList_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
         }
     }

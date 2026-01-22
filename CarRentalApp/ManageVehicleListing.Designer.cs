@@ -33,6 +33,7 @@
             this.btAddNewCar = new System.Windows.Forms.Button();
             this.btEditCar = new System.Windows.Forms.Button();
             this.btDeleteCar = new System.Windows.Forms.Button();
+            this.btRefresh = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gvVehicleList)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,6 +46,7 @@
             this.gvVehicleList.RowTemplate.Height = 24;
             this.gvVehicleList.Size = new System.Drawing.Size(775, 304);
             this.gvVehicleList.TabIndex = 0;
+            this.gvVehicleList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvVehicleList_CellContentClick);
             // 
             // label1
             // 
@@ -57,6 +59,7 @@
             this.label1.Size = new System.Drawing.Size(200, 24);
             this.label1.TabIndex = 1;
             this.label1.Text = "Manage Vehicle Listing";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // btAddNewCar
             // 
@@ -88,11 +91,22 @@
             this.btDeleteCar.UseVisualStyleBackColor = true;
             this.btDeleteCar.Click += new System.EventHandler(this.btDeleteCar_Click);
             // 
+            // btRefresh
+            // 
+            this.btRefresh.Location = new System.Drawing.Point(13, 27);
+            this.btRefresh.Name = "btRefresh";
+            this.btRefresh.Size = new System.Drawing.Size(133, 37);
+            this.btRefresh.TabIndex = 5;
+            this.btRefresh.Text = "Refresh";
+            this.btRefresh.UseVisualStyleBackColor = true;
+            this.btRefresh.Click += new System.EventHandler(this.btRefresh_Click);
+            // 
             // ManageVehicleListing
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btRefresh);
             this.Controls.Add(this.btDeleteCar);
             this.Controls.Add(this.btEditCar);
             this.Controls.Add(this.btAddNewCar);
@@ -114,5 +128,6 @@
         private System.Windows.Forms.Button btAddNewCar;
         private System.Windows.Forms.Button btEditCar;
         private System.Windows.Forms.Button btDeleteCar;
+        private System.Windows.Forms.Button btRefresh;
     }
 }

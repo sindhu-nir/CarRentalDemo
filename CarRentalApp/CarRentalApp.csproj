@@ -79,11 +79,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CarRentalDb.edmx</DependentUpon>
     </Compile>
-    <Compile Include="AddRentalRecord.cs">
+    <Compile Include="AddEditRentalRecord.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddRentalRecord.Designer.cs">
-      <DependentUpon>AddRentalRecord.cs</DependentUpon>
+    <Compile Include="AddEditRentalRecord.Designer.cs">
+      <DependentUpon>AddEditRentalRecord.cs</DependentUpon>
     </Compile>
     <Compile Include="CarRentalRecord.cs">
       <DependentUpon>CarRentalDb.tt</DependentUpon>
@@ -93,6 +93,12 @@
     </Compile>
     <Compile Include="MainWIndow.Designer.cs">
       <DependentUpon>MainWIndow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ManageRentalRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ManageRentalRecord.Designer.cs">
+      <DependentUpon>ManageRentalRecord.cs</DependentUpon>
     </Compile>
     <Compile Include="ManageVehicleListing.cs">
       <SubType>Form</SubType>
@@ -108,11 +114,14 @@
     <EmbeddedResource Include="AddEditVehicle.resx">
       <DependentUpon>AddEditVehicle.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AddRentalRecord.resx">
-      <DependentUpon>AddRentalRecord.cs</DependentUpon>
+    <EmbeddedResource Include="AddEditRentalRecord.resx">
+      <DependentUpon>AddEditRentalRecord.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWIndow.resx">
       <DependentUpon>MainWIndow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManageRentalRecord.resx">
+      <DependentUpon>ManageRentalRecord.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ManageVehicleListing.resx">
       <DependentUpon>ManageVehicleListing.cs</DependentUpon>
