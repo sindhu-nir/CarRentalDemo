@@ -11,23 +11,85 @@ namespace CarRentalApp
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
     
-    public partial class TypesOfCar
+    public partial class TypesOfCar : INotifyPropertyChanged
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TypesOfCar()
+        public event PropertyChangedEventHandler PropertyChanged;
+    	protected void OnPropertyChanged(string propertyName)
         {
-            this.CarRentalRecords = new HashSet<CarRentalRecord>();
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
     
-        public int Id { get; set; }
-        public string Make { get; set; }
-        public string Model { get; set; }
-        public string VIN { get; set; }
-        public string LicensePlateNumber { get; set; }
-        public Nullable<int> Year { get; set; }
+        public TypesOfCar()
+        {
+            this.CarRentalRecords = new ObservableCollection<CarRentalRecord>();
+        }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CarRentalRecord> CarRentalRecords { get; set; }
+        int _Id;
+        public int Id 
+        {
+            get { return _Id; }
+            set
+            {
+                _Id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+        string _Make;
+        public string Make 
+        {
+            get { return _Make; }
+            set
+            {
+                _Make = value;
+                OnPropertyChanged("Make");
+            }
+        }
+        string _Model;
+        public string Model 
+        {
+            get { return _Model; }
+            set
+            {
+                _Model = value;
+                OnPropertyChanged("Model");
+            }
+        }
+        string _VIN;
+        public string VIN 
+        {
+            get { return _VIN; }
+            set
+            {
+                _VIN = value;
+                OnPropertyChanged("VIN");
+            }
+        }
+        string _LicensePlateNumber;
+        public string LicensePlateNumber 
+        {
+            get { return _LicensePlateNumber; }
+            set
+            {
+                _LicensePlateNumber = value;
+                OnPropertyChanged("LicensePlateNumber");
+            }
+        }
+        Nullable<int> _Year;
+        public Nullable<int> Year 
+        {
+            get { return _Year; }
+            set
+            {
+                _Year = value;
+                OnPropertyChanged("Year");
+            }
+        }
+    
+        public virtual ObservableCollection<CarRentalRecord> CarRentalRecords { get; set; }
     }
 }

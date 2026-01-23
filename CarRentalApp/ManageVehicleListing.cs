@@ -49,7 +49,7 @@ namespace CarRentalApp
 
         private void btAddNewCar_Click(object sender, EventArgs e)
         {
-            AddEditVehicle addEditVehicle = new AddEditVehicle();
+            AddEditVehicle addEditVehicle = new AddEditVehicle(this);
             addEditVehicle.MdiParent = this.MdiParent;
             addEditVehicle.Show();
         }
@@ -62,7 +62,7 @@ namespace CarRentalApp
                 {
                     var Id = (int)gvVehicleList.SelectedRows[0].Cells["Id"].Value;
                     var car = _db.TypesOfCars.FirstOrDefault(q => q.Id == Id);
-                    AddEditVehicle addEditVehicle = new AddEditVehicle(car);
+                    AddEditVehicle addEditVehicle = new AddEditVehicle(car, this);
                     addEditVehicle.MdiParent = this.MdiParent;
                     addEditVehicle.Show();
                 }
@@ -81,9 +81,14 @@ namespace CarRentalApp
         {
             var Id = (int)gvVehicleList.SelectedRows[0].Cells["Id"].Value;
             var car = _db.TypesOfCars.FirstOrDefault(q => q.Id == Id);
-            _db.TypesOfCars.Remove(car);     
-            _db.SaveChanges();
-            gvVehicleList.Refresh();
+            DialogResult dr = MessageBox.Show("Are you sure want to delete this record?", "Delete",
+                MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+            if (dr == DialogResult.Yes)
+            {
+                _db.TypesOfCars.Remove(car);
+                _db.SaveChanges();
+                PopulateGrid();
+            }
 
         }
 

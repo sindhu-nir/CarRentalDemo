@@ -26,6 +26,14 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
 <#=codeStringGenerator.UsingDirectives(inHeader: false)#>
 <#=codeStringGenerator.EntityClassOpening(entity)#>
 {
+    public event PropertyChangedEventHandler PropertyChanged;
+	protected void OnPropertyChanged(string propertyName)
+    {
+        var handler = PropertyChanged;
+        if (handler != null)
+            handler(this, new PropertyChangedEventArgs(propertyName));
+    }
+
 <#
     var propertiesWithDefaultValues = typeMapper.GetPropertiesWithDefaultValues(entity);
     var collectionNavigationProperties = typeMapper.GetCollectionNavigationProperties(entity);
@@ -34,7 +42,6 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
     if (propertiesWithDefaultValues.Any() || collectionNavigationProperties.Any() || complexProperties.Any())
     {
 #>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
     public <#=code.Escape(entity)#>()
     {
 <#
@@ -48,7 +55,7 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
         foreach (var navigationProperty in collectionNavigationProperties)
         {
 #>
-        this.<#=code.Escape(navigationProperty)#> = new HashSet<<#=typeMapper.GetTypeName(navigationProperty.ToEndMember.GetEntityType())#>>();
+        this.<#=code.Escape(navigationProperty)#> = new ObservableCollection<<#=typeMapper.GetTypeName(navigationProperty.ToEndMember.GetEntityType())#>>();
 <#
         }
 
@@ -96,12 +103,6 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
 <#
         foreach (var navigationProperty in navigationProperties)
         {
-            if (navigationProperty.ToEndMember.RelationshipMultiplicity == RelationshipMultiplicity.Many)
-            {
-#>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-<#
-            }
 #>
     <#=codeStringGenerator.NavigationProperty(navigationProperty)#>
 <#
@@ -118,9 +119,17 @@ foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollectio
     fileManager.StartNewFile(complex.Name + ".cs");
     BeginNamespace(code);
 #>
-<#=codeStringGenerator.UsingDirectives(inHeader: false, includeCollections: false)#>
+<#=codeStringGenerator.UsingDirectives(inHeader: false, includeCollections: true)#>
 <#=Accessibility.ForType(complex)#> partial class <#=code.Escape(complex)#>
 {
+    public event PropertyChangedEventHandler PropertyChanged;
+	protected void OnPropertyChanged(string propertyName)
+    {
+        var handler = PropertyChanged;
+        if (handler != null)
+            handler(this, new PropertyChangedEventArgs(propertyName));
+    }
+
 <#
     var complexProperties = typeMapper.GetComplexProperties(complex);
     var propertiesWithDefaultValues = typeMapper.GetPropertiesWithDefaultValues(complex);
@@ -285,7 +294,7 @@ public class CodeStringGenerator
     {
         return string.Format(
             CultureInfo.InvariantCulture,
-            "{0} {1} {2} {{ {3}get; {4}set; }}",
+            "{1} _{2};\r\n    {0} {1} {2} \r\n    {{\r\n        {3}get {{ return _{2}; }}\r\n        {4}set\r\n        {{\r\n            _{2} = value;\r\n            OnPropertyChanged(\"{2}\");\r\n        }}\r\n    }}",
             Accessibility.ForProperty(edmProperty),
             _typeMapper.GetTypeName(edmProperty.TypeUsage),
             _code.Escape(edmProperty),
@@ -300,7 +309,7 @@ public class CodeStringGenerator
             CultureInfo.InvariantCulture,
             "{0} {1} {2} {{ {3}get; {4}set; }}",
             AccessibilityAndVirtual(Accessibility.ForNavigationProperty(navProp)),
-            navProp.ToEndMember.RelationshipMultiplicity == RelationshipMultiplicity.Many ? ("ICollection<" + endType + ">") : endType,
+            navProp.ToEndMember.RelationshipMultiplicity == RelationshipMultiplicity.Many ? ("ObservableCollection<" + endType + ">") : endType,
             _code.Escape(navProp),
             _code.SpaceAfter(Accessibility.ForGetter(navProp)),
             _code.SpaceAfter(Accessibility.ForSetter(navProp)));
@@ -313,13 +322,14 @@ public class CodeStringGenerator
     
     public string EntityClassOpening(EntityType entity)
     {
+		var baseType = _typeMapper.GetTypeName(entity.BaseType);
         return string.Format(
             CultureInfo.InvariantCulture,
             "{0} {1}partial class {2}{3}",
             Accessibility.ForType(entity),
             _code.SpaceAfter(_code.AbstractOption(entity)),
             _code.Escape(entity),
-            _code.StringBefore(" : ", _typeMapper.GetTypeName(entity.BaseType)));
+            _code.StringBefore(" : ", string.IsNullOrEmpty(baseType) ? "INotifyPropertyChanged" : baseType + ", INotifyPropertyChanged"));
     }
     
     public string EnumOpening(SimpleType enumType)
@@ -428,7 +438,7 @@ public class CodeStringGenerator
                 "{0}using System;{1}" +
                 "{2}",
                 inHeader ? Environment.NewLine : "",
-                includeCollections ? (Environment.NewLine + "using System.Collections.Generic;") : "",
+                includeCollections ? (Environment.NewLine + "using System.Collections.Generic;" + Environment.NewLine + "using System.Collections.ObjectModel;" + Environment.NewLine + "using System.ComponentModel;") : "",
                 inHeader ? "" : Environment.NewLine)
             : "";
     }

@@ -11,15 +11,79 @@ namespace CarRentalApp
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
     
-    public partial class CarRentalRecord
+    public partial class CarRentalRecord : INotifyPropertyChanged
     {
-        public int id { get; set; }
-        public string CustomerName { get; set; }
-        public Nullable<System.DateTime> DateRented { get; set; }
-        public Nullable<System.DateTime> DateReturned { get; set; }
-        public Nullable<decimal> Cost { get; set; }
-        public Nullable<int> TypeOfCarId { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+    	protected void OnPropertyChanged(string propertyName)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+    
+        int _id;
+        public int id 
+        {
+            get { return _id; }
+            set
+            {
+                _id = value;
+                OnPropertyChanged("id");
+            }
+        }
+        string _CustomerName;
+        public string CustomerName 
+        {
+            get { return _CustomerName; }
+            set
+            {
+                _CustomerName = value;
+                OnPropertyChanged("CustomerName");
+            }
+        }
+        Nullable<System.DateTime> _DateRented;
+        public Nullable<System.DateTime> DateRented 
+        {
+            get { return _DateRented; }
+            set
+            {
+                _DateRented = value;
+                OnPropertyChanged("DateRented");
+            }
+        }
+        Nullable<System.DateTime> _DateReturned;
+        public Nullable<System.DateTime> DateReturned 
+        {
+            get { return _DateReturned; }
+            set
+            {
+                _DateReturned = value;
+                OnPropertyChanged("DateReturned");
+            }
+        }
+        Nullable<decimal> _Cost;
+        public Nullable<decimal> Cost 
+        {
+            get { return _Cost; }
+            set
+            {
+                _Cost = value;
+                OnPropertyChanged("Cost");
+            }
+        }
+        Nullable<int> _TypeOfCarId;
+        public Nullable<int> TypeOfCarId 
+        {
+            get { return _TypeOfCarId; }
+            set
+            {
+                _TypeOfCarId = value;
+                OnPropertyChanged("TypeOfCarId");
+            }
+        }
     
         public virtual TypesOfCar TypesOfCar { get; set; }
     }

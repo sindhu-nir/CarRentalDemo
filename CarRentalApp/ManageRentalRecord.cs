@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CarRentalApp.Interfaces;
+using CarRentalApp.Models;
+using CarRentalApp.Presenters;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,93 +13,56 @@ using System.Windows.Forms;
 
 namespace CarRentalApp
 {
-    public partial class ManageRentalRecord : Form
+    public partial class ManageRentalRecord : Form, IManageRentalRecordView
     {
-        private readonly CarRentalEntities _db;
+        private readonly ManageRentalRecordPresenter _presenter;
+
+        public int? SelectedRecordId
+        {
+            get
+            {
+                if (gvRecordList.SelectedRows.Count > 0)
+                    return (int)gvRecordList.SelectedRows[0].Cells["Id"].Value;
+                return null;
+            }
+        }
+        public event EventHandler AddRecordClicked;
+        public event EventHandler EditRecordClicked;
+        public event EventHandler DeleteRecordClicked;
+        public event EventHandler ViewLoaded;
+
         public ManageRentalRecord()
         {
             InitializeComponent();
-            _db = new CarRentalEntities();
+            _presenter = new ManageRentalRecordPresenter(this);
         }
 
-        private void btAddRecord_Click(object sender, EventArgs e)
+        public void ShowChildForm(Form childForm)
         {
-            var addRentalRecord = new AddEditRentalRecord
+            // Set MdiParent only if this form is inside an MDI container
+            if (this.MdiParent != null)
             {
-                MdiParent = this.MdiParent
-            };
-            addRentalRecord.Show();
+                childForm.MdiParent = this.MdiParent;
+            }
+            childForm.Show();
         }
 
-        private void btEditRecord_Click(object sender, EventArgs e)
+        public void DisplayRecords(List<CarRentalRecordDto> records)
         {
-            try
-            {
-                if (gvRecordList.SelectedRows.Count > 0) // Check if any row is selected
-                {
-                    var Id = (int)gvRecordList.SelectedRows[0].Cells["Id"].Value;
-                    var record = _db.CarRentalRecords.FirstOrDefault(q => q.id == Id);
-                    var addEditRentalRecord = new AddEditRentalRecord(record);
-                    addEditRentalRecord.MdiParent = this.MdiParent;
-                    addEditRentalRecord.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Please select a vehicle first.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}");
-            }
-        }
-
-        private void btDeleteRecord_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var Id = (int)gvRecordList.SelectedRows[0].Cells["Id"].Value;
-                var record = _db.CarRentalRecords.FirstOrDefault(q => q.id == Id);
-                _db.CarRentalRecords.Remove(record);
-                _db.SaveChanges();
-                PopulateGrid();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}");
-            }
-        }
-
-        private void ManageRentalRecord_Load(object sender, EventArgs e)
-        {
-            try
-            {
-                PopulateGrid();
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show($"Error: {ex.Message}");
-            }
-        }
-
-        private void PopulateGrid()
-        {
-            var records = _db.CarRentalRecords.Select(q => new
-            {
-                Customer = q.CustomerName,
-                DateOut = q.DateRented,
-                DateIn = q.DateRented,
-                Id = q.id,
-                Cost = q.Cost,
-                Car = q.TypesOfCar.Make + " " + q.TypesOfCar.Model
-            }).ToList();
             gvRecordList.DataSource = records;
             gvRecordList.Columns["DateIn"].HeaderText = "Date In";
             gvRecordList.Columns["DateOut"].HeaderText = "Date Out";
-            //Hide the column for ID. Changed from the hard coded column value to the name, 
-            // to make it more dynamic. 
             gvRecordList.Columns["Id"].Visible = false;
         }
+
+        public void ShowMessage(string message)
+        {
+            MessageBox.Show(message);
+        }
+
+        private void btAddRecord_Click(object sender, EventArgs e) => AddRecordClicked?.Invoke(this, EventArgs.Empty);
+        private void btEditRecord_Click(object sender, EventArgs e) => EditRecordClicked?.Invoke(this, EventArgs.Empty);
+        private void btDeleteRecord_Click(object sender, EventArgs e) => DeleteRecordClicked?.Invoke(this, EventArgs.Empty);
+        private void ManageRentalRecord_Load(object sender, EventArgs e) => ViewLoaded?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -1,12 +1,14 @@
+C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\bin\Debug\CarRentalApp.exe.config
 C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\bin\Debug\CarRentalApp.exe
+C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\bin\Debug\CarRentalApp.pdb
 C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\bin\Debug\EntityFramework.dll
 C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\bin\Debug\EntityFramework.SqlServer.dll
-C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\bin\Debug\CarRentalApp.exe.config
 C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\bin\Debug\EntityFramework.xml
 C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\obj\Debug\CarRentalApp.csproj.AssemblyReference.cache
 C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\obj\Debug\CarRentalApp.AddEditVehicle.resources
 C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\obj\Debug\CarRentalApp.AddEditRentalRecord.resources
+C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\obj\Debug\CarRentalApp.Login.resources
 C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\obj\Debug\CarRentalApp.MainWIndow.resources
 C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\obj\Debug\CarRentalApp.ManageRentalRecord.resources
 C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\obj\Debug\CarRentalApp.ManageVehicleListing.resources
@@ -16,4 +18,4 @@ C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\obj\Debug\CarRentalApp.csproj.C
 C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\obj\Debug\CarRenta.B8E0B7D3.Up2Date
 C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\obj\Debug\CarRentalApp.exe
 C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\obj\Debug\CarRentalApp.pdb
-C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\bin\Debug\CarRentalApp.pdb
+C:\Users\DELL\Projects\CarRentalApp\CarRentalApp\obj\Debug\CarRentalApp.ManageUsers.resources

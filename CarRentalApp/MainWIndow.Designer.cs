@@ -34,6 +34,7 @@
             this.addRentalRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewArchiveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editRentalRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.managerUsersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -42,7 +43,8 @@
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.manageVehicleListingToolStripMenuItem,
-            this.manageRentalRecordsToolStripMenuItem});
+            this.manageRentalRecordsToolStripMenuItem,
+            this.managerUsersToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1092, 28);
@@ -69,22 +71,29 @@
             // addRentalRecordToolStripMenuItem
             // 
             this.addRentalRecordToolStripMenuItem.Name = "addRentalRecordToolStripMenuItem";
-            this.addRentalRecordToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.addRentalRecordToolStripMenuItem.Size = new System.Drawing.Size(217, 26);
             this.addRentalRecordToolStripMenuItem.Text = "Add Rental Record";
             this.addRentalRecordToolStripMenuItem.Click += new System.EventHandler(this.addRentalRecordToolStripMenuItem_Click);
             // 
             // viewArchiveToolStripMenuItem
             // 
             this.viewArchiveToolStripMenuItem.Name = "viewArchiveToolStripMenuItem";
-            this.viewArchiveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.viewArchiveToolStripMenuItem.Size = new System.Drawing.Size(217, 26);
             this.viewArchiveToolStripMenuItem.Text = "View Archive";
             this.viewArchiveToolStripMenuItem.Click += new System.EventHandler(this.viewArchiveToolStripMenuItem_Click);
             // 
             // editRentalRecordToolStripMenuItem
             // 
             this.editRentalRecordToolStripMenuItem.Name = "editRentalRecordToolStripMenuItem";
-            this.editRentalRecordToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.editRentalRecordToolStripMenuItem.Size = new System.Drawing.Size(217, 26);
             this.editRentalRecordToolStripMenuItem.Text = "Edit Rental Record";
+            // 
+            // managerUsersToolStripMenuItem
+            // 
+            this.managerUsersToolStripMenuItem.Name = "managerUsersToolStripMenuItem";
+            this.managerUsersToolStripMenuItem.Size = new System.Drawing.Size(121, 24);
+            this.managerUsersToolStripMenuItem.Text = "Manager Users";
+            this.managerUsersToolStripMenuItem.Click += new System.EventHandler(this.managerUsersToolStripMenuItem_Click);
             // 
             // MainWIndow
             // 
@@ -96,6 +105,8 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainWIndow";
             this.Text = "Car Rental Management System";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWIndow_FormClosing);
+            this.Load += new System.EventHandler(this.MainWIndow_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -111,5 +122,6 @@
         private System.Windows.Forms.ToolStripMenuItem addRentalRecordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewArchiveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editRentalRecordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem managerUsersToolStripMenuItem;
     }
 }
